@@ -1,0 +1,15 @@
+{
+    "Left": ["K_A", "C_DLeft", "C_LStick_Left", "C_RStick_Left"],
+    "Right": ["K_D", "C_DRight", "C_LStick_Right", "C_RStick_Right"],
+    "Up": ["K_W", "C_DUp", "C_LStick_Up", "C_RStick_Up"],
+    "Down": ["K_S", "C_DDown", "C_LStick_Down", "C_RStick_Down"],
+    "Space": ["L_Space", "C_BA"],
+    "ZOOM_IN": ["M_SCRL_UP", "K_PGUP"],
+    "ZOOM_OUT": ["M_SCRL_DOWN", "K_PGDOWN"],
+    "ROTATE_LIGHT_LEFT": ["K_Left"],
+    "ROTATE_LIGHT_RIGHT": ["K_Right"],
+    "LIGHT_INTENSITY_INCREASE": ["K_Up"],
+    "LIGHT_INTENSITY_DECREASE": ["K_Down"],
+    "DEBUG_MENU": ["K_F3"],
+    "CYCLE_RENDERING_MODE": ["K_F4"]
+}
