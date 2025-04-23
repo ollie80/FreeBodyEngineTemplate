@@ -1,0 +1,15 @@
+{
+    "name": "FreeBodyEngine Game Template",
+    "dependencies": [
+        "pygame-ce",
+        "moderngl",
+        "PyOpenGL",
+        "numpy",
+        "scipy",
+        "guppy3",
+        "perlin-noise"
+    ],
+    "main_file": "main.py",
+    "assets": "./assets",
+    "code": "./code"
+}

@@ -1,6 +1,9 @@
 import FreeBodyEngine as engine
 import pygame
+import moderngl
+
 import sys
+import game.game
 import os
 
 class colors: # stolen from some nerd on stack overflow
@@ -25,16 +28,19 @@ if __name__ == "__main__":
     slowdraw = False
     use_SDL = False
     display = 0
+    dev_mode = False
+    asset_dir = "./assets/"
+    production = False
 
     for arg in sys.argv:
         if arg.startswith("--fps"):
             value = arg.removeprefix("--fps=")
             if len(arg) == 0:
-                print(colors.Fail + "\n FPS Cap was not set because no value was provided.\n" + colors.ENDC)
+                print(colors.FAIL + "\n FPS Cap was not set because no value was provided.\n" + colors.ENDC)
                 continue
             
             if not value.isnumeric():
-                print(colors.Fail + "\nFPS Cap was not set because the provided value was not an integer.\n" + colors.ENDC)
+                print(colors.FAIL + "\nFPS Cap was not set because the provided value was not an integer.\n" + colors.ENDC)
                 continue
 
             fps = int(value)
@@ -81,13 +87,34 @@ if __name__ == "__main__":
 
         if arg == ("--SDL"):
             use_SDL = True
+        
+        if arg == ("--dev"):
+            dev_mode = True
+            asset_dir = "./dev/assets/"
+        if arg == "--production":
+            production = True
 
     if not use_SDL:
         flags = flags| pygame.OPENGL
     
-    main = engine.core.Main(use_SDL, window_size=(screen_size), flags=flags, fps=fps, display=display)
-    main.add_scene(engine.core.Scene(main), "main")
-    main.set_scene("main")
+    main = engine.core.Main(use_SDL, window_size=(screen_size), flags=flags, fps=fps, display=display, asset_dir=asset_dir)
+
+    main.add_scene(engine.core.Scene(main), "game")
+    
+    if dev_mode == False or production == True:
+        fb = main.files.load_image('engine/logo/FreeBodyTextLogoWhite.png', moderngl.BLEND)    
+        pg = main.files.load_image('engine/logo/pygame_ce_powered.png', moderngl.BLEND)
+
+        pg_scene = engine.core.SplashScreenScene(main, 4000, "fb_splash", pg,"#aaeebb", engine.core.FadeTransition(main, 250))
+        fb_scene = engine.core.SplashScreenScene(main, 4000, "game", fb, "#0f0f0f", engine.core.FadeTransition(main, 250))
+
+        main.add_scene(pg_scene, "pg_splash")
+        main.add_scene(fb_scene, "fb_splash")
+        main.change_scene("pg_splash")
+    
+    else:
+        main.change_scene("game")
+
     main.run(profiler=profiler)
 
 
